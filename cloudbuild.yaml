@@ -23,6 +23,7 @@ steps:
   - --service-account=${_SERVICE_ACCOUNT}
   - --max-instances=5
   - --memory=256Mi
+  # - --vpc-connector=projects/${_HOST_PROJECT_ID}/locations/${_REGION}/connectors/${_VPC_CONNECTOR}
   - --ingress=all
   #- --ingress=internal-and-cloud-load-balancing
   - --vpc-egress=all-traffic
@@ -33,6 +34,8 @@ timeout: 3660s
 images:
 - ${_REPO_REGION}/${_GLOBAL_ARTIFACT}/${_REPO_NAME}/${_SERVICE_NAME}
 
+options:
+  logging: CLOUD_LOGGING_ONLY
   
 substitutions:
   _REPO_REGION: us-docker.pkg.dev
