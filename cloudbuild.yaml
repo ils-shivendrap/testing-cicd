@@ -3,12 +3,12 @@ steps:
 # update the gcr.io/[project-id]/[build-image-name]
 - id: Docker build
   name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', '${_REPO_REGION}/${_GLOBAL_ARTIFACT}/${_REPO_NAME}/${_SERVICE_NAME}', '.']
+  args: ['build', '-t', '${_REPO_REGION}/${_REPO_NAME}/${_SERVICE_NAME}', '.']
 
 # Push the container image to Artifact Registry
 - id: Container image push
   name: 'gcr.io/cloud-builders/docker'
-  args: ['push', '${_REPO_REGION}/${_GLOBAL_ARTIFACT}/${_REPO_NAME}/${_SERVICE_NAME}']
+  args: ['push', '${_REPO_REGION}/${_REPO_NAME}/${_SERVICE_NAME}']
 
 - id: Cloud run deploy
   name: google/cloud-sdk
@@ -17,7 +17,7 @@ steps:
   - run
   - deploy
   - ${_SERVICE_NAME}
-  - --image=${_REPO_REGION}/${_GLOBAL_ARTIFACT}/${_REPO_NAME}/${_SERVICE_NAME}
+  - --image=${_REPO_REGION}/${_REPO_NAME}/${_SERVICE_NAME}
   - --region=${_REGION}
   - --platform=managed
   - --service-account=${_SERVICE_ACCOUNT}
@@ -32,17 +32,16 @@ steps:
 timeout: 3660s
 
 images:
-- ${_REPO_REGION}/${_GLOBAL_ARTIFACT}/${_REPO_NAME}/${_SERVICE_NAME}
+- ${_REPO_REGION}/${_REPO_NAME}/${_SERVICE_NAME}
 
 options:
   logging: CLOUD_LOGGING_ONLY
   
 substitutions:
   _REPO_REGION: us-docker.pkg.dev
-  _REPO_NAME: shiv-testing
+  _REPO_NAME: test
   _SERVICE_NAME: testing
   _REGION: us-central1
   _SERVICE_ACCOUNT: shiv-testing-account@sureel-test.iam.gserviceaccount.com
-  _GLOBAL_ARTIFACT: glb-chr-artifactory
-  _HOST_PROJECT_ID: sureel-test 
+  _PROJECT_ID: sureel-test
   
