@@ -43,7 +43,7 @@ substitutions:
   _SERVICE_NAME: testing
   _REGION: us-central1
   _SERVICE_ACCOUNT: shiv-testing-account@sureel-test.iam.gserviceaccount.com
-  _PROJECT_ID: glb-chr-artifactory
+  _PROJECT_ID: sureel-test
   _TAG: shiv-image 
   
 
