@@ -3,12 +3,12 @@ steps:
 # update the gcr.io/[project-id]/[build-image-name]
 - id: Docker build
   name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', '${_REPO_REGION}/${_PROJECT_ID}/${_REPO_NAME}/${_SERVICE_NAME}:${TAG}', '.']
+  args: ['build', '-t', '${_REPO_REGION}/${_PROJECT_ID}/${_REPO_NAME}/${_SERVICE_NAME}:${_TAG}', '.']
 
 # Push the container image to Artifact Registry
 - id: Container image push
   name: 'gcr.io/cloud-builders/docker'
-  args: ['push', '${_REPO_REGION}/${_PROJECT_ID}/${_REPO_NAME}/${_SERVICE_NAME}:${TAG}']
+  args: ['push', '${_REPO_REGION}/${_PROJECT_ID}/${_REPO_NAME}/${_SERVICE_NAME}:${_TAG}']
 
 - id: Cloud run deploy
   name: google/cloud-sdk
@@ -17,7 +17,7 @@ steps:
   - run
   - deploy
   - ${_SERVICE_NAME}
-  - --image=${_REPO_REGION}/${_PROJECT_ID}/${_REPO_NAME}/${_SERVICE_NAME}:${TAG}
+  - --image=${_REPO_REGION}/${_PROJECT_ID}/${_REPO_NAME}/${_SERVICE_NAME}:${_TAG}
   - --region=${_REGION}
   - --platform=managed
   - --service-account=${_SERVICE_ACCOUNT}
@@ -32,7 +32,7 @@ steps:
 timeout: 3660s
 
 images:
-- ${_REPO_REGION}/${_PROJECT_ID}/${_REPO_NAME}/${_SERVICE_NAME}:${TAG}
+- ${_REPO_REGION}/${_PROJECT_ID}/${_REPO_NAME}/${_SERVICE_NAME}:${_TAG}
 
 options:
   logging: CLOUD_LOGGING_ONLY
