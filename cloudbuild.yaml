@@ -3,12 +3,12 @@ steps:
 # update the gcr.io/[project-id]/[build-image-name]
 - id: Docker build
   name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', '${_REPO_REGION}/${_PROJECT_ID}/${_REPO_NAME}/${_SERVICE_NAME}', '.']
+  args: ['build', '-t', '${_REPO_REGION}/${_PROJECT_ID}/${_REPO_NAME}/${_SERVICE_NAME}:${TAG}', '.']
 
 # Push the container image to Artifact Registry
 - id: Container image push
   name: 'gcr.io/cloud-builders/docker'
-  args: ['push', '${_REPO_REGION}/${_PROJECT_ID}/${_REPO_NAME}/${_SERVICE_NAME}']
+  args: ['push', '${_REPO_REGION}/${_PROJECT_ID}/${_REPO_NAME}/${_SERVICE_NAME}:${TAG}']
 
 - id: Cloud run deploy
   name: google/cloud-sdk
@@ -17,12 +17,12 @@ steps:
   - run
   - deploy
   - ${_SERVICE_NAME}
-  - --image=${_REPO_REGION}/${_PROJECT_ID}/${_REPO_NAME}/${_SERVICE_NAME}
+  - --image=${_REPO_REGION}/${_PROJECT_ID}/${_REPO_NAME}/${_SERVICE_NAME}:${TAG}
   - --region=${_REGION}
   - --platform=managed
   - --service-account=${_SERVICE_ACCOUNT}
   - --max-instances=5
-  - --memory=256Mi
+  - --memory=512Mi
   # - --vpc-connector=projects/${_HOST_PROJECT_ID}/locations/${_REGION}/connectors/${_VPC_CONNECTOR}
   # - --ingress=all
   #- --ingress=internal-and-cloud-load-balancing
@@ -32,16 +32,22 @@ steps:
 timeout: 3660s
 
 images:
-- ${_REPO_REGION}/${_PROJECT_ID}/${_REPO_NAME}/${_SERVICE_NAME}
+- ${_REPO_REGION}/${_PROJECT_ID}/${_REPO_NAME}/${_SERVICE_NAME}:${TAG}
 
 options:
   logging: CLOUD_LOGGING_ONLY
   
 substitutions:
   _REPO_REGION: us-docker.pkg.dev
-  _REPO_NAME: testing
+  _REPO_NAME: shiv-testing
   _SERVICE_NAME: testing
   _REGION: us-central1
   _SERVICE_ACCOUNT: shiv-testing-account@sureel-test.iam.gserviceaccount.com
-  _PROJECT_ID: sureel-test
+  _PROJECT_ID: glb-chr-artifactory
+  _TAG: shiv-image 
   
+
+
+  # 'gcr.io/_PROJECT_ID/IMAGE_NAME:TAG'
+
+  # us-docker.pkg.dev/glb-chr-artifactory/shiv-testing:shiv-image
