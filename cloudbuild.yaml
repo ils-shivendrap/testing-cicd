@@ -8,8 +8,8 @@ steps:
     - '-c'
     - |
       # Get the Git username from the email address (assumes format "username@domain")
-      git_username=$(echo "$COMMIT_EMAIL" | cut -d "@" -f 1)
-      echo "$git_username"
+      # git_username=$(echo "$COMMIT_EMAIL" | cut -d "@" -f 1)
+      # echo "$git_username"
       echo "-------------------------------------------------"  
       git_user_email="$BUILD_USER_EMAIL"
       git_user_id=$(echo "$git_user_email" | cut -d "@" -f 1)
