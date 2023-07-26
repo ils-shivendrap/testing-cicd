@@ -9,7 +9,7 @@ steps:
     - |
       # Get the Git author's email address
       git_author_email=$(git show -s --format='%ae' $COMMIT_SHA)
-      echo "git_author_email"
+      echo "$git_author_email"
       # Extract GitHub username from the email address
       git_username=$(echo "$git_author_email" | cut -d'+' -f2 | awk -F'@' '{print $1}')
       
