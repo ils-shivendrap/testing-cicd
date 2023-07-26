@@ -7,10 +7,6 @@ steps:
   args:
     - '-c'
     - |
-      echo "-------------------------------------------------"  
-      git_user_email="$BUILD_USER_EMAIL"
-      git_user_id=$(echo "$git_user_email" | cut -d "@" -f 1)
-      echo "Git User ID: $git_user_id"
       echo "--------------------------------------------------"
 
 
