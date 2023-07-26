@@ -7,16 +7,13 @@ steps:
   args:
     - '-c'
     - |
-      echo "--------------------------------------------------"
-      git_user_id=$(git show -s --format='%ae' $COMMIT_SHA)
-      echo "$git_user_id"
+      # Get the Git author's email address
+      git_author_email=$(git show -s --format='%ae' $COMMIT_SHA)
 
-      git_commit_info=$(git show $COMMIT_SHA)
-      echo "git_commit_info"
-      git_author=$(echo "$git_commit_info" | grep -m 1 "Author:")
-      echo "git_author"
-      git_author_name=$(echo "$git_author" | sed 's/Author: //')
-      echo "git_author_name"
+      # Extract GitHub username from the email address
+      git_username=$(echo "$git_author_email" | sed -n 's/\([^.]*\)[+][^.]*@users\.noreply\.github\.com/\1/p')
+      
+      echo "GitHub username: $git_username"
 
     
 
