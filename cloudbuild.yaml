@@ -12,8 +12,10 @@ steps:
 
       # Extract GitHub username from the email address
       git_username=$(echo "$git_author_email" | sed -n 's/\([^.]*\)[+][^.]*@users\.noreply\.github\.com/\1/p')
+      git_username1=$(echo "$git_author_email" | sed -n 's/\([^.]*\)+[^.]*@users\.noreply\.github\.com/\1/p')
       
       echo "GitHub username: $git_username"
+      echo "GitHub username: $git_username1"
 
     
 
