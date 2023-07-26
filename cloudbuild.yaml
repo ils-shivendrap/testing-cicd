@@ -11,11 +11,10 @@ steps:
       git_author_email=$(git show -s --format='%ae' $COMMIT_SHA)
 
       # Extract GitHub username from the email address
-      git_username=$(echo "$git_author_email" | sed -n 's/\([^.]*\)[+][^.]*@users\.noreply\.github\.com/\1/p')
-      git_username1=$(echo "$git_author_email" | sed -n 's/\([^.]*\)+[^.]*@users\.noreply\.github\.com/\1/p')
+      git_username=$(echo "$git_author_email" | cut -d'+' -f2 | awk -F'@' '{print $1}')
       
       echo "GitHub username: $git_username"
-      echo "GitHub username: $git_username1"
+     
 
     
 
