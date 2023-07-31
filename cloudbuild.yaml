@@ -25,7 +25,7 @@ steps:
       echo " Repo Name: $REPO_NAME"
       echo "Repo Full Name: $REPO_FULL_NAME"
       echo "Branch Name: $BRANCH_NAME"
-      echo " "
+      echo " ---"
       echo "________________________________________"
       
 
