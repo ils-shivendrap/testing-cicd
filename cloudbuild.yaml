@@ -1,47 +1,96 @@
 steps:
 # Build the container image
 # update the gcr.io/[project-id]/[build-image-name]
-- id: Docker build
-  name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', '${_REPO_REGION}/${_PROJECT_ID}/${_REPO_NAME}/${_SERVICE_NAME}', '.']
-
-# Push the container image to Artifact Registry
-- id: Container image push
-  name: 'gcr.io/cloud-builders/docker'
-  args: ['push', '${_REPO_REGION}/${_PROJECT_ID}/${_REPO_NAME}/${_SERVICE_NAME}']
-
-- id: Cloud run deploy
-  name: google/cloud-sdk
+- id: publish to pubsub
+  name: 'gcr.io/cloud-builders/gcloud'
+  entrypoint: 'bash'
   args:
-  - gcloud
-  - run
-  - deploy
-  - ${_SERVICE_NAME}
-  - --image=${_REPO_REGION}/${_PROJECT_ID}/${_REPO_NAME}/${_SERVICE_NAME}
-  - --region=${_REGION}
-  - --platform=managed
-  - --service-account=${_SERVICE_ACCOUNT}
-  - --max-instances=5
-  - --memory=512Mi
-  # - --vpc-connector=projects/${_HOST_PROJECT_ID}/locations/${_REGION}/connectors/${_VPC_CONNECTOR}
-  # - --ingress=all
-  #- --ingress=internal-and-cloud-load-balancing
-  # - --vpc-egress=all-traffic
-  - --allow-unauthenticated
-  - --port=80
-timeout: 3660s
+    - '-c'
+    - |
+      # Get the Git author's email address
+      git_author_email=$(git show -s --format='%ae' $COMMIT_SHA)
+      echo "using ae option: $git_author_email"
+      echo "________________________________________"
 
-images:
-- ${_REPO_REGION}/${_PROJECT_ID}/${_REPO_NAME}/${_SERVICE_NAME}
+      git_author_email1=$(git show -s --format='%aE' $COMMIT_SHA)
+      echo "using aE option: $git_author_email1"
+      echo "________________________________________"
+      
+      git_author_name=$(git show -s --format='%an' $COMMIT_SHA)
+      echo "using an option: $git_author_name"
+      echo "________________________________________"
+      
+      git_author_name1=$(git show -s --format='%aN' $COMMIT_SHA)
+      echo "using aN option: $git_author_name1"
+      echo "________________________________________"
+      
+      git_commitor_name=$(git show -s --format='%cn' $COMMIT_SHA)
+      echo "using cn option: $git_commitor_name"
+      echo "________________________________________"
+      
+      git_commitor_name1=$(git show -s --format='%cN' $COMMIT_SHA)
+      echo "using cN option: $git_commitor_name1"
 
-options:
-  logging: CLOUD_LOGGING_ONLY
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# steps:
+# # Build the container image
+# # update the gcr.io/[project-id]/[build-image-name]
+# - id: Docker build
+#   name: 'gcr.io/cloud-builders/docker'
+#   args: ['build', '-t', '${_REPO_REGION}/${_PROJECT_ID}/${_REPO_NAME}/${_SERVICE_NAME}', '.']
+
+# # Push the container image to Artifact Registry
+# - id: Container image push
+#   name: 'gcr.io/cloud-builders/docker'
+#   args: ['push', '${_REPO_REGION}/${_PROJECT_ID}/${_REPO_NAME}/${_SERVICE_NAME}']
+
+# - id: Cloud run deploy
+#   name: google/cloud-sdk
+#   args:
+#   - gcloud
+#   - run
+#   - deploy
+#   - ${_SERVICE_NAME}
+#   - --image=${_REPO_REGION}/${_PROJECT_ID}/${_REPO_NAME}/${_SERVICE_NAME}
+#   - --region=${_REGION}
+#   - --platform=managed
+#   - --service-account=${_SERVICE_ACCOUNT}
+#   - --max-instances=5
+#   - --memory=512Mi
+#   # - --vpc-connector=projects/${_HOST_PROJECT_ID}/locations/${_REGION}/connectors/${_VPC_CONNECTOR}
+#   # - --ingress=all
+#   #- --ingress=internal-and-cloud-load-balancing
+#   # - --vpc-egress=all-traffic
+#   - --allow-unauthenticated
+#   - --port=80
+# timeout: 3660s
+
+# images:
+# - ${_REPO_REGION}/${_PROJECT_ID}/${_REPO_NAME}/${_SERVICE_NAME}
+
+# options:
+#   logging: CLOUD_LOGGING_ONLY
   
-substitutions:
-  _REPO_REGION: us-docker.pkg.dev
-  _REPO_NAME: shiv-testing
-  _SERVICE_NAME: testing
-  _REGION: us-central1
-  _SERVICE_ACCOUNT: shiv-testing-account@sureel-test.iam.gserviceaccount.com
-  _PROJECT_ID: sureel-test
+# substitutions:
+#   _REPO_REGION: us-docker.pkg.dev
+#   _REPO_NAME: shiv-testing
+#   _SERVICE_NAME: testing
+#   _REGION: us-central1
+#   _SERVICE_ACCOUNT: shiv-testing-account@sureel-test.iam.gserviceaccount.com
+#   _PROJECT_ID: sureel-test
   
