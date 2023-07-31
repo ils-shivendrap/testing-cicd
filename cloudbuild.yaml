@@ -19,11 +19,13 @@ steps:
       echo "authon Name N: $git_author_name1"
       echo "________________________________________"
       
-      body=$(git show   --format='%b' $COMMIT_SHA)
+      # Get the commit body
+      body=$(git show -s --format='%b' $COMMIT_SHA)
       echo "Body: $body"
       echo "________________________________________"
-
-      commit_note=$(git show --format='%N' $COMMIT_SHA)
+      
+      # Get the commit subject (commit note)
+      commit_note=$(git show -s --format='%s' $COMMIT_SHA)
       echo "commit_note: $commit_note"
       echo "________________________________________"
 
