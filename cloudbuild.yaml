@@ -9,31 +9,26 @@ steps:
     - |
       # Get the Git author's email address
       git_author_email=$(git show -s --format='%ae' $COMMIT_SHA)
-      echo "using ae option: $git_author_email"
+      echo "author Email: $git_author_email"
       echo "________________________________________"
 
-      git_author_email1=$(git show -s --format='%aE' $COMMIT_SHA)
-      echo "using aE option: $git_author_email1"
-      echo "________________________________________"
       
       git_author_name=$(git show -s --format='%an' $COMMIT_SHA)
-      echo "using an option: $git_author_name"
-      echo "________________________________________"
-      
-      git_author_name1=$(git show -s --format='%aN' $COMMIT_SHA)
-      echo "using aN option: $git_author_name1"
+      echo "authon Name: $git_author_name"
       echo "________________________________________"
       
       git_commitor_name=$(git show -s --format='%cn' $COMMIT_SHA)
-      echo "using cn option: $git_commitor_name"
+      echo "committer Name: $git_commitor_name"
       echo "________________________________________"
-      
-      git_commitor_name1=$(git show -s --format='%cN' $COMMIT_SHA)
-      echo "using cN option: $git_commitor_name1"
 
+      echo" Repo Name: $REPO_NAME"
+      echo "Repo Full Name: $REPO_FULL_NAME"
+      echo" Branch Name: $BRANCH_NAME"
+      echo" "
       echo "________________________________________"
       
       echo "$(git show $COMMIT_SHA)"
+      echo "$(git log $COMMIT_SHA)"
 
       
 
