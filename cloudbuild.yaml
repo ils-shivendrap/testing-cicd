@@ -21,14 +21,14 @@ steps:
       echo "committer Name: $git_commitor_name"
       echo "________________________________________"
 
-      echo" Repo Name: $REPO_NAME"
+      echo "commit: $COMMIT_SHA"
+      echo " Repo Name: $REPO_NAME"
       echo "Repo Full Name: $REPO_FULL_NAME"
-      echo" Branch Name: $BRANCH_NAME"
-      echo" "
+      echo "Branch Name: $BRANCH_NAME"
+      echo " "
       echo "________________________________________"
       
-      echo "$(git show $COMMIT_SHA)"
-      echo "$(git log $COMMIT_SHA)"
+
 
       
 
