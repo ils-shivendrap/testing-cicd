@@ -31,6 +31,12 @@ steps:
       git_commitor_name1=$(git show -s --format='%cN' $COMMIT_SHA)
       echo "using cN option: $git_commitor_name1"
 
+      echo "________________________________________"
+      
+      echo "$(git show $COMMIT_SHA)"
+
+      
+
 
 
 
