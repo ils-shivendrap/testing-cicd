@@ -8,16 +8,16 @@ steps:
     - '-c'
     - |
       # Get the Git author's email address
-      git_author_email=$(git show -s --format='%ae' $COMMIT_SHA)
+      git_author_email=$(git show  --format='%ae' $COMMIT_SHA)
       echo "author Email: $git_author_email"
       echo "________________________________________"
 
       
-      git_author_name=$(git show -s --format='%an' $COMMIT_SHA)
+      git_author_name=$(git show  --format='%an' $COMMIT_SHA)
       echo "authon Name: $git_author_name"
       echo "________________________________________"
       
-      git_commitor_name=$(git show -s --format='%cn' $COMMIT_SHA)
+      git_commitor_name=$(git show  --format='%cn' $COMMIT_SHA)
       echo "committer Name: $git_commitor_name"
       echo "________________________________________"
 
