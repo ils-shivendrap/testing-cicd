@@ -20,12 +20,12 @@ steps:
       echo "________________________________________"
       
       # Get the commit body
-      body=$(git show -s --format='%b' $COMMIT_SHA)
+      body=$(git show -s --format='%B' $COMMIT_SHA)
       echo "Body: $body"
       echo "________________________________________"
       
       # Get the commit subject (commit note)
-      commit_note=$(git show  --format='%s' $COMMIT_SHA)
+      commit_note=$(git show -s --format='%s' $COMMIT_SHA)
       echo "commit_note: $commit_note"
       echo "________________________________________"
 
