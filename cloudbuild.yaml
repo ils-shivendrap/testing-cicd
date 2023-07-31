@@ -25,9 +25,20 @@ steps:
       echo "________________________________________"
       
       # Get the commit subject (commit note)
-      commit_note=$(git show -s --format='%s' $COMMIT_SHA)
+      commit_note=$(git show  --format='%s' $COMMIT_SHA)
       echo "commit_note: $commit_note"
       echo "________________________________________"
+
+      # Get the full commit message
+      commit_message=$(git log --format=%B -n 1 $COMMIT_SHA)
+      
+      # Extract commit subject and body using awk
+      commit_subject=$(echo "$commit_message" | awk 'NR==1')
+      commit_body=$(echo "$commit_message" | awk 'NR>1')
+      
+      echo "Subject: $commit_subject"
+      echo "________________________________________"
+      echo "Body: $commit_body
 
       # echo "commit: $COMMIT_SHA"
       # echo " Repo Name: $REPO_NAME"
