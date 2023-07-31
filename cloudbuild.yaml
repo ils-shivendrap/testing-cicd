@@ -25,7 +25,7 @@ steps:
       echo "________________________________________"
       
       # Get the commit subject (commit note)
-      commit_note=$(git show  --format='%N' $COMMIT_SHA)
+      commit_note=$(git show  --format='%s' $COMMIT_SHA)
       echo "commit_note: $commit_note"
       echo "________________________________________"
 
