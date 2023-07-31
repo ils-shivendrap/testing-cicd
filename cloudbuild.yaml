@@ -3,7 +3,7 @@ steps:
 # update the gcr.io/[project-id]/[build-image-name]
 - id: Docker build
   name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', '${_REPO_REGION}/${_PROJECT_ID}/${_REPO_NAME}/${_SERVICE_NAME}, '.']
+  args: ['build', '-t', '${_REPO_REGION}/${_PROJECT_ID}/${_REPO_NAME}/${_SERVICE_NAME}', '.']
 
 # Push the container image to Artifact Registry
 - id: Container image push
