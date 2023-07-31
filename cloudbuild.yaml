@@ -14,17 +14,23 @@ steps:
 
       
       git_author_name=$(git show -s  --format='%an' $COMMIT_SHA)
-      echo "authon Name: $git_author_name"
+      echo "authon Name n: $git_author_name"
+      git_author_name1=$(git show -s  --format='%an' $COMMIT_SHA)
+      echo "authon Name N: $git_author_name1"
       echo "________________________________________"
       
-      git_commitor_name=$(git show  -s --format='%cn' $COMMIT_SHA)
-      echo "committer Name: $git_commitor_name"
+      body=$(git show  -s --format='%b' $COMMIT_SHA)
+      echo "Body: $body"
       echo "________________________________________"
 
-      echo "commit: $COMMIT_SHA"
-      echo " Repo Name: $REPO_NAME"
-      echo "Repo Full Name: $REPO_FULL_NAME"
-      echo "Branch Name: $BRANCH_NAME"
+      commit_note=$(git show  -s --format='%N' $COMMIT_SHA)
+      echo "commit_note: $commit_note"
+      echo "________________________________________"
+
+      # echo "commit: $COMMIT_SHA"
+      # echo " Repo Name: $REPO_NAME"
+      # echo "Repo Full Name: $REPO_FULL_NAME"
+      # echo "Branch Name: $BRANCH_NAME"
       echo " ---"
       echo "________________________________________"
       
