@@ -30,11 +30,11 @@ steps:
       echo "________________________________________"
 
 
-      # echo "commit: $COMMIT_SHA"
-      # echo " Repo Name: $REPO_NAME"
-      # echo "Repo Full Name: $REPO_FULL_NAME"
-      # echo "Branch Name: $BRANCH_NAME"
-      echo " ---"
+
+      commit_id=$(git rev-parse HEAD)
+      echo "$commit_id"
+      username=$(git show -s --format='%an' $commit_id)
+      echo "$username"
       echo "________________________________________"
       
 
