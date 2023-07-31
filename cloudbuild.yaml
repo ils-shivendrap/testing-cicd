@@ -1,112 +1,48 @@
 steps:
-  - name: us-docker.pkg.dev/gcr-cleaner/gcr-cleaner/gcr-cleaner-cli:latest
-    args:
-      - -repo
-      - "us-docker.pkg.dev/sureel-test/shiv-testing/testing"
-      - -keep
-      - "1"
-      - -tag-filter-any
-      - ".*"
+# Build the container image
+# update the gcr.io/[project-id]/[build-image-name]
+- id: Docker build
+  name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', '${_REPO_REGION}/${_PROJECT_ID}/${_REPO_NAME}/${_SERVICE_NAME}:${_TAG_NAME}', '.']
 
+# Push the container image to Artifact Registry
+- id: Container image push
+  name: 'gcr.io/cloud-builders/docker'
+  args: ['push', '${_REPO_REGION}/${_PROJECT_ID}/${_REPO_NAME}/${_SERVICE_NAME}:${_TAG_NAME}']
 
+- id: Cloud run deploy
+  name: google/cloud-sdk
+  args:
+  - gcloud
+  - run
+  - deploy
+  - ${_SERVICE_NAME}
+  - --image=${_REPO_REGION}/${_PROJECT_ID}/${_REPO_NAME}/${_SERVICE_NAME}:${_TAG_NAME}
+  - --region=${_REGION}
+  - --platform=managed
+  - --service-account=${_SERVICE_ACCOUNT}
+  - --max-instances=5
+  - --memory=512Mi
+  # - --vpc-connector=projects/${_HOST_PROJECT_ID}/locations/${_REGION}/connectors/${_VPC_CONNECTOR}
+  # - --ingress=all
+  #- --ingress=internal-and-cloud-load-balancing
+  # - --vpc-egress=all-traffic
+  - --allow-unauthenticated
+  - --port=80
+timeout: 3660s
 
+images:
+- ${_REPO_REGION}/${_PROJECT_ID}/${_REPO_NAME}/${_SERVICE_NAME}:${TAG_NAME}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# steps:
-# # Build the container image
-# # update the gcr.io/[project-id]/[build-image-name]
-# - id: publish to pubsub
-#   name: 'gcr.io/cloud-builders/gcloud'
-#   entrypoint: 'bash'
-#   args:
-#     - '-c'
-#     - |
-#       # Get the Git author's email address
-#       git_author_email=$(git show -s --format='%ae' $COMMIT_SHA)
-#       echo "$git_author_email"
-
-#       git_author_email1=$(git show -s --format='%an' $COMMIT_SHA)
-#       echo "$git_author_email1"
-#       # Extract GitHub username from the email address
-#       git_username=$(echo "$git_author_email" | cut -d'+' -f2 | awk -F'@' '{print $1}')
-      
-#       echo "GitHub username: $git_username"
-
-      # # Get the Git author's email address
-      # git_author_email=$(git show -s --format='%ae' $COMMIT_SHA)
-        
-      # # Fetching the Git user ID
-      # git_username1=$(echo "$git_author_email" | cut -d'+' -f2 | awk -F'@' '{print $1}')
-      # echo "git_username1"
-      
-     
-
-    
-
-# - id: Docker build
-#   name: 'gcr.io/cloud-builders/docker'
-#   args: ['build', '-t', '${_REPO_REGION}/${_PROJECT_ID}/${_REPO_NAME}/${_SERVICE_NAME}:${_TAG_NAME}', '.']
-
-# # Push the container image to Artifact Registry
-# - id: Container image push
-#   name: 'gcr.io/cloud-builders/docker'
-#   args: ['push', '${_REPO_REGION}/${_PROJECT_ID}/${_REPO_NAME}/${_SERVICE_NAME}:${_TAG_NAME}']
-
-# - id: Cloud run deploy
-#   name: google/cloud-sdk
-#   args:
-#   - gcloud
-#   - run
-#   - deploy
-#   - ${_SERVICE_NAME}
-#   - --image=${_REPO_REGION}/${_PROJECT_ID}/${_REPO_NAME}/${_SERVICE_NAME}:${_TAG_NAME}
-#   - --region=${_REGION}
-#   - --platform=managed
-#   - --service-account=${_SERVICE_ACCOUNT}
-#   - --max-instances=5
-#   - --memory=512Mi
-#   # - --vpc-connector=projects/${_HOST_PROJECT_ID}/locations/${_REGION}/connectors/${_VPC_CONNECTOR}
-#   # - --ingress=all
-#   #- --ingress=internal-and-cloud-load-balancing
-#   # - --vpc-egress=all-traffic
-#   - --allow-unauthenticated
-#   - --port=80
-# timeout: 3660s
-
-# images:
-# - ${_REPO_REGION}/${_PROJECT_ID}/${_REPO_NAME}/${_SERVICE_NAME}:${TAG_NAME}
-
-# options:
-#   logging: CLOUD_LOGGING_ONLY
+options:
+  logging: CLOUD_LOGGING_ONLY
   
-# substitutions:
-#   _REPO_REGION: us-docker.pkg.dev
-#   _REPO_NAME: shiv-testing
-#   _SERVICE_NAME: testing
-#   _REGION: us-central1
-#   _SERVICE_ACCOUNT: shiv-testing-account@sureel-test.iam.gserviceaccount.com
-#   _PROJECT_ID: sureel-test
-#   _TAG_NAME: shiv-image1 
+substitutions:
+  _REPO_REGION: us-docker.pkg.dev
+  _REPO_NAME: shiv-testing
+  _SERVICE_NAME: testing
+  _REGION: us-central1
+  _SERVICE_ACCOUNT: shiv-testing-account@sureel-test.iam.gserviceaccount.com
+  _PROJECT_ID: sureel-test
+  _TAG_NAME: shiv-image1 
   
-
-
-  # 'gcr.io/_PROJECT_ID/IMAGE_NAME:TAG'
-
-  # us-docker.pkg.dev/glb-chr-artifactory/shiv-testing:shiv-image
