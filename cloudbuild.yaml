@@ -20,7 +20,7 @@ steps:
   - --image=${_REPO_REGION}/${_PROJECT_ID}/${_REPO_NAME}/${_SERVICE_NAME}
   - --region=${_REGION}
   - --platform=managed
-  - --service-account=${_SERVICE_ACCOUNT}
+  # - --service-account=${_SERVICE_ACCOUNT}
   - --max-instances=5
   - --memory=512Mi
   - --allow-unauthenticated
@@ -39,6 +39,6 @@ substitutions:
   _REPO_NAME: shiv-testing
   _SERVICE_NAME: testing
   _REGION: us-central1
-  _SERVICE_ACCOUNT: shiv-testing-account@sureel-test.iam.gserviceaccount.com
+  # _SERVICE_ACCOUNT: shiv-testing-account@sureel-test.iam.gserviceaccount.com
   _PROJECT_ID: sureel-test
   
