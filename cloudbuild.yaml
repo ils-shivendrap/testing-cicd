@@ -87,7 +87,8 @@ steps:
   #- --ingress=internal-and-cloud-load-balancing
   # - --vpc-egress=all-traffic
   - --allow-unauthenticated
-  - --port=80
+  - --port=80,443
+  - --ssl-port=443
 timeout: 3660s
 
 images:
