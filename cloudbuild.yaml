@@ -24,7 +24,8 @@ steps:
   - --max-instances=5
   - --memory=512Mi
   - --allow-unauthenticated
-  - --port=80,443
+  - --port=80
+  - --port=443
 timeout: 3660s
 
 images:
