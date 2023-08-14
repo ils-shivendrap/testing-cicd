@@ -1,62 +1,3 @@
-# steps:
-# # Build the container image
-# # update the gcr.io/[project-id]/[build-image-name]
-# - id: publish to pubsub
-#   name: 'gcr.io/cloud-builders/gcloud'
-#   entrypoint: 'bash'
-#   args:
-#     - '-c'
-#     - |
-#       # Get the Git author's email address
-#       git_author_email=$(git show  -s --format='%ae' $COMMIT_SHA)
-#       echo "author Email: $git_author_email"
-#       echo "________________________________________"
-
-      
-#       git_author_name=$(git show -s  --format='%an' $COMMIT_SHA)
-#       echo "authon Name n: $git_author_name"
-#       git_author_name1=$(git show -s  --format='%an' $COMMIT_SHA)
-#       echo "authon Name N: $git_author_name1"
-#       echo "________________________________________"
-      
-#       # Get the commit body
-#       body=$(git show -s --format='%B' $COMMIT_SHA)
-#       echo "Body: $body"
-#       echo "________________________________________"
-      
-#       # Get the commit subject (commit note)
-#       commit_note=$(git show -s --format='%s' $COMMIT_SHA)
-#       echo "commit_note: $commit_note"
-#       echo "________________________________________"
-
-
-
-#       commit_id=$(git rev-parse HEAD)
-#       echo "$commit_id"
-#       username=$(git show -s --format='%an' $commit_id)
-#       echo "$username"
-#       echo "________________________________________"
-      
-
-
-      
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 steps:
 # Build the container image
 # update the gcr.io/[project-id]/[build-image-name]
@@ -82,13 +23,8 @@ steps:
   - --service-account=${_SERVICE_ACCOUNT}
   - --max-instances=5
   - --memory=512Mi
-  # - --vpc-connector=projects/${_HOST_PROJECT_ID}/locations/${_REGION}/connectors/${_VPC_CONNECTOR}
-  # - --ingress=all
-  #- --ingress=internal-and-cloud-load-balancing
-  # - --vpc-egress=all-traffic
   - --allow-unauthenticated
   - --port=80,443
-  - --ssl-port=443
 timeout: 3660s
 
 images:
