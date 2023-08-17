@@ -23,6 +23,7 @@ steps:
   # - --service-account=${_SERVICE_ACCOUNT}
   - --max-instances=5
   - --memory=512Mi
+  - --allow-unauthenticated
 timeout: 3660s
 
 images:
