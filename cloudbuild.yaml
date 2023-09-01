@@ -1,14 +1,12 @@
 steps:
-# Build the container image
-# update the gcr.io/[project-id]/[build-image-name]
-- id: Docker build
-  name: 'gcr.io/cloud-builders/docker'
+# Build the container image with caching
+- name: 'gcr.io/cloud-builders/docker'
   entrypoint: 'bash'
   args:
     - '-c'
     - |
       export DOCKER_BUILDKIT=1
-      docker build -t '${_REPO_REGION}/${_PROJECT_ID}/${_REPO_NAME}/${_SERVICE_NAME}' .
+      docker build --cache-from=${_REPO_REGION}/${_PROJECT_ID}/${_REPO_NAME}/${_SERVICE_NAME} -t ${_REPO_REGION}/${_PROJECT_ID}/${_REPO_NAME}/${_SERVICE_NAME} .
 
 # Push the container image to Artifact Registry
 - id: Container image push
@@ -44,4 +42,3 @@ substitutions:
   _REGION: us-central1
   # _SERVICE_ACCOUNT: shiv-testing-account@sureel-test.iam.gserviceaccount.com
   _PROJECT_ID: sureel-test
-  
