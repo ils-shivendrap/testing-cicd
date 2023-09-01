@@ -16,6 +16,7 @@ WORKDIR /app
 COPY --from=build /app ./
 COPY package.json package-lock.json ./
 RUN npm install --production
+RUN npm cache clean --force
 
 CMD ["npm", "run", "start"]
 
