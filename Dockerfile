@@ -13,7 +13,7 @@ FROM node:alpine
 
 WORKDIR /app
 
-COPY --from=build /app/dist ./dist
+COPY --from=build /app ./
 COPY package.json package-lock.json ./
 RUN npm install --production
 
