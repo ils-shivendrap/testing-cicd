@@ -1,45 +1,17 @@
-# # Build Stage
-# FROM node:14-alpine AS build
+FROM php:8.0-apache
 
-# WORKDIR /app
+RUN apt-get update && apt-get upgrade -yy \
+    && apt-get install --no-install-recommends apt-utils libjpeg-dev libpng-dev libwebp-dev \
+    libzip-dev zlib1g-dev libfreetype6-dev supervisor zip \
+    unzip software-properties-common -yy \
+    && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-# COPY package.json package-lock.json ./
-# RUN npm install
-# COPY . .
-# RUN npm run build
+RUN docker-php-ext-install zip \
+    && docker-php-ext-install mysqli pdo pdo_mysql \
+    && docker-php-ext-install exif \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp \
+    && docker-php-ext-install -j "$(nproc)" gd \
+    && a2enmod rewrite
 
-# # Final Stage
-# FROM node:14-alpine
-
-# WORKDIR /app
-
-# COPY --from=build /app ./
-# COPY package.json package-lock.json ./
-# RUN npm install --production
-# RUN npm cache clean --force
-
-# CMD ["npm", "run", "start"]
-
-
-
-
-
-
-
-
-
-
-
-
-
-FROM node:14-alpine
-
-WORKDIR /app
-
-COPY package.json .
-COPY package-lock.json .
-COPY . . 
-
-RUN npm i 
-
-CMD ["npm", "run", "start"]
+WORKDIR /var/www/html
+COPY ./app /var/www/html/ 
