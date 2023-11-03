@@ -22,8 +22,8 @@ steps:
   - '--platform'
   - 'managed'
   - '--allow-unauthenticated'
-  # - '--service-account'
-  # - '${_SERVICE_ACCOUNT}'
+  - '--service-account'
+  - '${_SERVICE_ACCOUNT}'
   - '--max-instances'
   - '5'
   - '--timeout'
@@ -39,4 +39,4 @@ substitutions:
   _SERVICE_NAME: wordpress-cr-testing
   _REGION: us-central1
   _PROJ_ID: sureel-test
-  # _SERVICE_ACCOUNT: 
+  _SERVICE_ACCOUNT: shiv-testing1@sureel-test.iam.gserviceaccount.com
